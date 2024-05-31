@@ -1,0 +1,21 @@
+version: '1'
+name: iw
+services:
+  php: 
+    image: iw/iw
+    build: ./php
+    ports: 
+      - "80:80"
+    environment:
+      KOHANA_ENV: DEVELOPMENT
+      TERM: cygwin
+    volumes:
+      - ./../:/var/www/html
+  mysql:
+    image: iw/iw-mysql
+    build: ./mysql
+    ports:
+      - "3306:3306"
+    # Muda padrão de autenticação do Mysql para o legado
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
